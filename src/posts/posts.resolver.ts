@@ -24,6 +24,12 @@ export class PostsResolver {
         return this.postsService.findOneById(id);        
     }
 
+    @Query(() => [Post])
+    postsAuthor(@Args('authorId', { type: () => String }) authorId: string): Promise<Post[]> {
+        return this.postsService.findAllPostByAuthor(authorId);
+    }    
+    
+
     @Mutation(()=>Post)
     createPost(@Args('postInput') postInput: CreatePostInput) {
         return this.postsService.createPost(postInput);

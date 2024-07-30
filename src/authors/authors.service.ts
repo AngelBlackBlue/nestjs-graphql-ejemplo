@@ -12,9 +12,8 @@ import { PostsService } from 'src/posts/posts.service';
 export class AuthorsService {
   constructor(
     @InjectRepository(Author) 
-    private readonly authorRepository: Repository<Author>,
-    @InjectRepository(Post) 
-    private readonly postRepository: Repository<Post>,
+    private readonly authorRepository: Repository<Author>, 
+    // private readonly postRepository: PostsService,
   ){}
 
   async create(author: CreateAuthorInput): Promise<Author> {
@@ -42,15 +41,12 @@ export class AuthorsService {
     return await this.authorRepository.find();
   }
 
-  async getPosts(id: string): Promise<Post[]> {
-    return await this.postRepository.find(
-      {
-        where: {authorId: id},
-        relations: ['post']
-       }
-    )
+  // async getPosts(id: string): Promise<Post[]> {
+  //   return await this.authorRepository.find({where: {id}}, 
+  //     relati
+  //   );
     
-  }
+  // }
 
   // update(id: number, updateAuthorInput: UpdateAuthorInput) {
   //   return `This action updates a #${id} author`;

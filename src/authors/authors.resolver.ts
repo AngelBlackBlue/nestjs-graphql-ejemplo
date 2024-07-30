@@ -31,10 +31,10 @@ export class AuthorsResolver {
      return this.authorsService.findAll();
   }
 
-  @Resolver(() => [Post])
-  posts(@Parent() author: Author): Promise<Post[]> {
-    return this.authorsService.getPosts(author.id);
-  }
+  // @ResolveField(() => [Post])
+  // posts(@Parent() author: Author): Promise<Post[]> {
+  //   return this.authorsService.getPosts(author.id);
+  // }
   
 
   // @Mutation(() => Author)
