@@ -20,8 +20,8 @@ type Query {
   posts: [Post!]!
   postByTitle(title: String!): Post!
   postById(id: String!): Post!
+  author(id: String!): Author!
   authors: [Author!]!
-  author(id: Int!): Author!
 }
 
 type Mutation {
