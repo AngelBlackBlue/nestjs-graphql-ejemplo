@@ -14,8 +14,13 @@ export class PostsResolver {
     }
 
     @Query(() => Post)
-    post(@Args('title', { type: () => String }) title: string): Promise<Post> {
-        return this.postsService.findOne(title);
+    postByTitle(@Args('title', { type: () => String }) title: string): Promise<Post> {
+        return this.postsService.findOneByTitle(title);
+    }
+
+    @Query(() => Post)
+    postById(@Args('id', { type: () => String }) id: string): Promise<Post> {
+        return this.postsService.findOneById(id);        
     }
 
     @Mutation((returns)=>Post)

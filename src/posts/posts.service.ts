@@ -16,8 +16,12 @@ export class PostsService {
         return await this.postsRepository.find();
     }
 
-    async findOne(title: string): Promise<Post> {
+    async findOneByTitle(title: string): Promise<Post> {
         return await this.postsRepository.findOneBy({ title })
+    }
+
+    async findOneById(id: string): Promise<Post> {
+        return await this.postsRepository.findOneBy({ id })
     }
 
     async createPost(post: CreatePostDto): Promise<Post> {

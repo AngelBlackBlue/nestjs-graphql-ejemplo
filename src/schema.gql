@@ -10,7 +10,8 @@ type Post {
 
 type Query {
   posts: [Post!]!
-  post(title: String!): Post!
+  postByTitle(title: String!): Post!
+  postById(id: String!): Post!
 }
 
 type Mutation {
@@ -19,5 +20,5 @@ type Mutation {
 
 input CreatePostDto {
   title: String!
-  content: String!
+  content: String
 }
