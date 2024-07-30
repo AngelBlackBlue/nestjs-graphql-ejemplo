@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 
 
 @InputType()
-export class CreatePostDto {
+export class CreatePostInput {
 
     @Transform(({ value }) => value.trim())
     @IsString()
