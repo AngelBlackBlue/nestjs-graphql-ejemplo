@@ -1,6 +1,16 @@
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 import { Author } from "src/authors/entities/author.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { 
+    Column, 
+    CreateDateColumn, 
+    UpdateDateColumn, 
+    DeleteDateColumn, 
+    Entity, 
+    ManyToOne, 
+    PrimaryGeneratedColumn, 
+} from "typeorm";
+
+
 
 @Entity({ name: 'Posts' })
 @ObjectType()
