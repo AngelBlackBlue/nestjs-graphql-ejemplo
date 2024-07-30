@@ -6,12 +6,15 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/posts/entities/post.entity';
 import { GraphQLError } from 'graphql';
+import { PostsService } from 'src/posts/posts.service';
 
 @Injectable()
 export class AuthorsService {
   constructor(
     @InjectRepository(Author) 
     private readonly authorRepository: Repository<Author>,
+    @InjectRepository(Post) 
+    private readonly postRepository: Repository<Post>,
   ){}
 
   async create(author: CreateAuthorInput): Promise<Author> {
@@ -39,11 +42,21 @@ export class AuthorsService {
     return await this.authorRepository.find();
   }
 
-  update(id: number, updateAuthorInput: UpdateAuthorInput) {
-    return `This action updates a #${id} author`;
+  async getPosts(id: string): Promise<Post[]> {
+    return await this.postRepository.find(
+      {
+        where: {authorId: id},
+        relations: ['post']
+       }
+    )
+    
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} author`;
-  }
+  // update(id: number, updateAuthorInput: UpdateAuthorInput) {
+  //   return `This action updates a #${id} author`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} author`;
+  // }
 }

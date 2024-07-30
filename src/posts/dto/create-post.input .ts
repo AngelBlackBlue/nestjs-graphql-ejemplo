@@ -22,5 +22,5 @@ export class CreatePostInput {
 
     @IsUUID()
     @Field()
-    authorId: string
+    authorId: string;
 }
