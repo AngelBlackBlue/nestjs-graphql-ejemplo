@@ -10,4 +10,14 @@ type Post {
 
 type Query {
   posts: [Post!]!
+  post(title: String!): Post!
+}
+
+type Mutation {
+  createPost(postInput: CreatePostDto!): Post!
+}
+
+input CreatePostDto {
+  title: String!
+  content: String!
 }
