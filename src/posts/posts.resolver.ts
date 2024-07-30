@@ -8,8 +8,8 @@ export class PostsResolver {
     constructor(  
         private readonly postsService: PostsService) {}
     
-    @Query((returns) => [Post])    
-    posts() { 
+    @Query(() => [Post])    
+    posts(): Promise<Post[]> { 
         return this.postsService.findAll(); 
     }
 
@@ -23,7 +23,7 @@ export class PostsResolver {
         return this.postsService.findOneById(id);        
     }
 
-    @Mutation((returns)=>Post)
+    @Mutation(()=>Post)
     createPost(@Args('postInput') postInput: CreatePostInput) {
         return this.postsService.createPost(postInput);
      }
