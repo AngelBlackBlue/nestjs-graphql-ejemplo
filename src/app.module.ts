@@ -3,6 +3,7 @@ import { PostsModule } from './posts/posts.module';
 import { DatabaseModule } from './database/database.module';
 import { GraphqlModule } from './graphql/graphql.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthorsModule } from './authors/authors.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     GraphqlModule,
     DatabaseModule,
     PostsModule,
+    AuthorsModule,
   ],
   controllers: [],
   providers: [],

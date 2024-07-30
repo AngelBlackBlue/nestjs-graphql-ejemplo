@@ -1,6 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { Transform } from "class-transformer";
-import { IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 
 
 @InputType()
@@ -8,13 +8,15 @@ export class CreatePostDto {
 
     @Transform(({ value }) => value.trim())
     @IsString()
-    @MinLength(5)
+    @MinLength(5, { message: 'Content must be at least 5 characters' }) 
+    @MaxLength(50, { message: 'Title must be between 5 and 50 characters' })
+    @IsNotEmpty({ message: 'Title is required' })
     @Field()
     title: string;
     
     @Transform(({ value }) => value.trim())
-    @IsString()
-    @MinLength(5)
-    @Field()
-    content: string;
+    @IsString({ message: 'Content must be a string' })
+    @MaxLength(400, { message: 'Content must be 400 characters or less.' })
+    @Field({nullable: true})
+    content?: string;
 }
