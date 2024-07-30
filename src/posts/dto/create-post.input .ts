@@ -1,6 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { Transform } from "class-transformer";
-import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, MaxLength, MinLength, IsUUID } from "class-validator";
 
 
 @InputType()
@@ -19,4 +19,8 @@ export class CreatePostInput {
     @MaxLength(400, { message: 'Content must be 400 characters or less.' })
     @Field({nullable: true})
     content?: string;
+
+    @IsUUID()
+    @Field()
+    authorId: string
 }

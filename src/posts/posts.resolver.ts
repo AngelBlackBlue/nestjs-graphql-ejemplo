@@ -23,7 +23,7 @@ export class PostsResolver {
         return this.postsService.findOneById(id);        
     }
 
-    @Mutation(()=>Post)
+    @Mutation((returns)=>Post)
     createPost(@Args('postInput') postInput: CreatePostInput) {
         return this.postsService.createPost(postInput);
      }

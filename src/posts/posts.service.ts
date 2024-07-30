@@ -4,12 +4,15 @@ import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePostInput  } from './dto/create-post.Input ';
 import { GraphQLError } from 'graphql';
+import { Author } from 'src/authors/entities/author.entity';
+import { AuthorsService } from 'src/authors/authors.service';
 
 @Injectable()
 export class PostsService {
     constructor(
         @InjectRepository(Post) 
-        private readonly postsRepository: Repository<Post>
+        private readonly postsRepository: Repository<Post>,
+        private readonly authorsRepository: AuthorsService,
     ){}
 
     async findAll(): Promise<Post[]> {
@@ -34,6 +37,10 @@ export class PostsService {
                 }
         })}
         const newPost = await this.postsRepository.create(post);
-        return this.postsRepository.save(newPost);
+        return await this.postsRepository.save(newPost);
+    }
+
+    async getAuthor(authorId: string): Promise<Author> {
+        return await this.authorsRepository.findOneId(authorId);
     }
 }
