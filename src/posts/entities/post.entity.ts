@@ -17,6 +17,10 @@ export class Post {
     @Field({nullable: true}) 
     content?: string;
 
+    @Column()
+    @Field((type) => ID)
+    authorId: string
+
     @ManyToOne(() => Author, author => author.posts)
     @Field(() => Author)
     author: Author;

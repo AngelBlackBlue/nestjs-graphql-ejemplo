@@ -13,10 +13,6 @@ export class Author {
     @Field()
     name: string;
 
-    @Column()
-    @Field((type) => ID)
-    authorId: string;
-
     @OneToMany(() => Post, (post) => post.author)
     @Field(()=> [Post], {nullable: true}) 
     posts: Post[];

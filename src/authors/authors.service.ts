@@ -17,7 +17,7 @@ export class AuthorsService {
   async create(author: CreateAuthorInput): Promise<Author> {
     const autorName = await this.findOneAuthor(author.name);
     if(autorName){
-      throw new GraphQLError('Title already exists', {
+      throw new GraphQLError('Author already exists', {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: author.name
