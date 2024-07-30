@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreatePostDto } from './dto/create-post';
+import { CreatePostInput  } from './dto/create-post.Input ';
 import { GraphQLError } from 'graphql';
 
 @Injectable()
@@ -24,8 +24,8 @@ export class PostsService {
         return await this.postsRepository.findOneBy({ id })
     }
 
-    async createPost(post: CreatePostDto): Promise<Post> {
-        const postTitle = await this.postsRepository.findOneBy({ title: post.title });
+    async createPost(post: CreatePostInput ): Promise<Post> {
+        const postTitle = await this.findOneByTitle(post.title);
         if(postTitle){
             throw new GraphQLError('Title already exists', {
                 extensions: {

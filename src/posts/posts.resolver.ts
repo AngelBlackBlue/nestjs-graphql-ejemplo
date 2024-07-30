@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
-import { CreatePostDto } from './dto/create-post';
+import { CreatePostInput } from './dto/create-post.input ';
 
 @Resolver()
 export class PostsResolver {
@@ -24,7 +24,7 @@ export class PostsResolver {
     }
 
     @Mutation((returns)=>Post)
-    createPost(@Args('postInput') postInput: CreatePostDto) {
+    createPost(@Args('postInput') postInput: CreatePostInput) {
         return this.postsService.createPost(postInput);
      }
 }
