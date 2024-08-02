@@ -20,15 +20,15 @@ type Query {
   posts: [Post!]!
   postByTitle(title: String!): Post!
   postById(id: String!): Post!
-  author(id: String!): Author!
+  postsAuthor(authorId: String!): [Post!]!
+  authorByName(name: String!): Author!
+  authorById(id: String!): Author!
   authors: [Author!]!
 }
 
 type Mutation {
   createPost(postInput: CreatePostInput!): Post!
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
-  updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
-  removeAuthor(id: Int!): Author!
 }
 
 input CreatePostInput {
@@ -39,9 +39,4 @@ input CreatePostInput {
 
 input CreateAuthorInput {
   name: String!
-}
-
-input UpdateAuthorInput {
-  name: String
-  id: Int!
 }

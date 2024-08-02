@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Parent } from '@nestjs/graphql';
 import { AuthorsService } from './authors.service';
 import { Author } from './entities/author.entity';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
+import { Post } from 'src/posts/entities/post.entity';
 
 @Resolver(() => Author)
 export class AuthorsResolver {
@@ -15,12 +16,12 @@ export class AuthorsResolver {
     return this.authorsService.create(createAuthorInput);
   }
 
-  @Query(() => Author, { name: 'author' })
+  @Query(() => Author)
   authorByName(@Args('name', { type: () => String }) name: string): Promise<Author> {
     return this.authorsService.findOneAuthor(name);
   }
 
-  @Query(() => Author, { name: 'author' })
+  @Query(() => Author)
   authorById(@Args('id', { type: () => String }) id: string): Promise<Author> {
     return this.authorsService.findOneId(id);
   }
@@ -29,15 +30,14 @@ export class AuthorsResolver {
   findAll(): Promise<Author[]> {
      return this.authorsService.findAll();
   }
-  
 
-  @Mutation(() => Author)
-  updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput) {
-    return this.authorsService.update(updateAuthorInput.id, updateAuthorInput);
-  }
+  // @Mutation(() => Author)
+  // updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput) {
+  //   return this.authorsService.update(updateAuthorInput.id, updateAuthorInput);
+  // }
 
-  @Mutation(() => Author)
-  removeAuthor(@Args('id', { type: () => Int }) id: number) {
-    return this.authorsService.remove(id);
-  }
+  // @Mutation(() => Author)
+  // removeAuthor(@Args('id', { type: () => Int }) id: number) {
+  //   return this.authorsService.remove(id);
+  // }
 }

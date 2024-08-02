@@ -19,6 +19,11 @@ export class PostsService {
         return await this.postsRepository.find();
     }
 
+    async findAllPostByAuthor(authorId: string): Promise<Post[]> {
+        return await this.postsRepository.find({ where: { authorId }, relations: ['author'] })
+        
+    }
+
     async findOneByTitle(title: string): Promise<Post> {
         return await this.postsRepository.findOneBy({ title })
     }

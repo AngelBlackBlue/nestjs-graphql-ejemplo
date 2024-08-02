@@ -7,6 +7,7 @@ import { AuthorsModule } from 'src/authors/authors.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Post]), AuthorsModule],
-  providers: [PostsService, PostsResolver]
+  providers: [PostsService, PostsResolver],
+  exports: [PostsService],
 })
 export class PostsModule {}
