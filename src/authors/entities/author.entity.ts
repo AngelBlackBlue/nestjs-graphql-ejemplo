@@ -18,14 +18,14 @@ export class Author {
     posts: Post[];
 
 
-    // @CreateDateColumn()
-    // @Field()
-    // createdDate: Date;
+    @CreateDateColumn()
+    @Field()
+    createdDate: Date;
   
-    // @UpdateDateColumn()
-    // updatedDate: Date;
+    @UpdateDateColumn()
+    updatedDate: Date;
   
-    // @DeleteDateColumn()
-    // @Field()
-    // deletedAt: Date;
+    @DeleteDateColumn()
+    @Field()
+    deletedAt: Date;
 }

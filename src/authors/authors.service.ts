@@ -4,9 +4,7 @@ import { UpdateAuthorInput } from './dto/update-author.input';
 import { Author } from './entities/author.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Post } from 'src/posts/entities/post.entity';
 import { GraphQLError } from 'graphql';
-import { PostsService } from 'src/posts/posts.service';
 
 @Injectable()
 export class AuthorsService {
@@ -80,11 +78,14 @@ export class AuthorsService {
           }
     })}
   
-    const aux = await this.authorRepository.update(id, {...updateAuthorInput});
+    await this.authorRepository.update(id, {...updateAuthorInput});
+    
     return await this.findOneId(id);
   }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} author`;
-  // }
+  async remove (id: string){
+   const deleteId = await this.findOneId(id);
+    await this.authorRepository.softDelete({ id }); 
+    return deleteId
+  }
 }

@@ -6,7 +6,14 @@ type Author {
   id: ID!
   name: String!
   posts: [Post!]
+  createdDate: DateTime!
+  deletedAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Post {
   id: ID!
@@ -23,13 +30,14 @@ type Query {
   postsAuthor(authorId: String!): [Post!]!
   authorByName(name: String!): Author!
   authorById(id: String!): Author!
-  authors: [Author!]!
+  findAll: [Author!]!
 }
 
 type Mutation {
   createPost(postInput: CreatePostInput!): Post!
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
   updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
+  removeAuthor(id: String!): Author!
 }
 
 input CreatePostInput {
