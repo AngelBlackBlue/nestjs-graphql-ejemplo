@@ -30,23 +30,21 @@ export class AuthorsService {
   }
 
   async findOneAuthor(name: string): Promise<Author> {
-    return await this.authorRepository.findOneBy({name}); 
+    return await this.authorRepository.findOne({
+      where: { name },
+      relations: ['posts']
+    }); 
   }
 
   async findOneId(id: string): Promise<Author> {
-    return await this.authorRepository.findOneBy({id}); 
+    return await this.authorRepository.findOne({
+      where: { id },
+      relations: ['posts']
+    });
   }
-
   async findAll(): Promise<Author[]> {
-    return await this.authorRepository.find();
+    return await this.authorRepository.find({relations: ['posts']});
   }
-
-  // async getPosts(id: string): Promise<Post[]> {
-  //   return await this.authorRepository.find({where: {id}}, 
-  //     relati
-  //   );
-    
-  // }
 
   // update(id: number, updateAuthorInput: UpdateAuthorInput) {
   //   return `This action updates a #${id} author`;

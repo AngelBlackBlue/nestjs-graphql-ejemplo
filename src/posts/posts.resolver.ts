@@ -29,7 +29,6 @@ export class PostsResolver {
         return this.postsService.findAllPostByAuthor(authorId);
     }    
     
-
     @Mutation(()=>Post)
     createPost(@Args('postInput') postInput: CreatePostInput) {
         return this.postsService.createPost(postInput);

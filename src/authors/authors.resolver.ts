@@ -16,12 +16,12 @@ export class AuthorsResolver {
     return this.authorsService.create(createAuthorInput);
   }
 
-  @Query(() => Author, { name: 'author' })
+  @Query(() => Author)
   authorByName(@Args('name', { type: () => String }) name: string): Promise<Author> {
     return this.authorsService.findOneAuthor(name);
   }
 
-  @Query(() => Author, { name: 'author' })
+  @Query(() => Author)
   authorById(@Args('id', { type: () => String }) id: string): Promise<Author> {
     return this.authorsService.findOneId(id);
   }
@@ -30,12 +30,6 @@ export class AuthorsResolver {
   findAll(): Promise<Author[]> {
      return this.authorsService.findAll();
   }
-
-  // @ResolveField(() => [Post])
-  // posts(@Parent() author: Author): Promise<Post[]> {
-  //   return this.authorsService.getPosts(author.id);
-  // }
-  
 
   // @Mutation(() => Author)
   // updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput) {

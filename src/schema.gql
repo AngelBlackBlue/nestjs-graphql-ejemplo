@@ -21,7 +21,8 @@ type Query {
   postByTitle(title: String!): Post!
   postById(id: String!): Post!
   postsAuthor(authorId: String!): [Post!]!
-  author(id: String!): Author!
+  authorByName(name: String!): Author!
+  authorById(id: String!): Author!
   authors: [Author!]!
 }
 
