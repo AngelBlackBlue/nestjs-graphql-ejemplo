@@ -1,9 +1,10 @@
 import { IsString, IsUUID } from 'class-validator';
-import { CreateAuthorInput } from './create-author.input';
+
 import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { CreatePostInput } from './create-post.Input ';
 
 @InputType()
-export class UpdateAuthorInput extends PartialType(CreateAuthorInput) {
+export class UpdatePostInput extends PartialType(CreatePostInput) {
   @IsUUID()
   @IsString()
   @Field()

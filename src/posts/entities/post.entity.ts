@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { IsUUID } from "class-validator";
 import { Author } from "src/authors/entities/author.entity";
 import { 
     Column, 
@@ -28,6 +29,7 @@ export class Post {
     content?: string;
 
     @Column()
+    @IsUUID()
     @Field((type) => ID)
     authorId: string
 
@@ -35,15 +37,14 @@ export class Post {
     @Field(() => Author)
     author: Author;
 
-    // @CreateDateColumn()
-    // @Field()
-    // createdDate: Date;
+    @CreateDateColumn()
+    @Field()
+    createdDate: Date;
   
-    // @UpdateDateColumn()
-    // updatedDate: Date;
+    @UpdateDateColumn()
+    updatedDate: Date;
   
-    // @DeleteDateColumn()
-    // @Field()
-    // deletedAt: Date;
-
+    @DeleteDateColumn()
+    @Field()
+    deletedAt: Date;
 }
