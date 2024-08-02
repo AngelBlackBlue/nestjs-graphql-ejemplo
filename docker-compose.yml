@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mysql:
-    image: mysql:8.0.36-bookworm
+    image: mysql:lts
     container_name: mysql_NestJS_GraphQL_Example
     restart: always
     environment:

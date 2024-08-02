@@ -31,10 +31,10 @@ export class AuthorsResolver {
      return this.authorsService.findAll();
   }
 
-  // @Mutation(() => Author)
-  // updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput) {
-  //   return this.authorsService.update(updateAuthorInput.id, updateAuthorInput);
-  // }
+  @Mutation(() => Author)
+  updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput) {
+    return this.authorsService.update(updateAuthorInput.id, updateAuthorInput);
+  }
 
   // @Mutation(() => Author)
   // removeAuthor(@Args('id', { type: () => Int }) id: number) {

@@ -13,12 +13,11 @@ export class AuthorsService {
   constructor(
     @InjectRepository(Author) 
     private readonly authorRepository: Repository<Author>, 
-    // private readonly postRepository: PostsService,
   ){}
 
   async create(author: CreateAuthorInput): Promise<Author> {
-    const autorName = await this.findOneAuthor(author.name);
-    if(autorName){
+    const authorName = await this.findOneAuthor(author.name);
+    if(authorName){
       throw new GraphQLError('Author already exists', {
           extensions: {
             code: 'BAD_USER_INPUT',
@@ -30,25 +29,60 @@ export class AuthorsService {
   }
 
   async findOneAuthor(name: string): Promise<Author> {
-    return await this.authorRepository.findOne({
+    const autorName = await this.authorRepository.findOne({
       where: { name },
       relations: ['posts']
     }); 
+    if(autorName === null){
+      throw new GraphQLError('author does not exist', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: name
+          }
+    })}
+    return autorName;
   }
 
   async findOneId(id: string): Promise<Author> {
-    return await this.authorRepository.findOne({
+    const authorId = await this.authorRepository.findOne({
       where: { id },
       relations: ['posts']
     });
+
+    if(authorId === null){
+      throw new GraphQLError('author does not exist', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: id
+          }
+    })}
+    return authorId;
+
   }
   async findAll(): Promise<Author[]> {
     return await this.authorRepository.find({relations: ['posts']});
   }
 
-  // update(id: number, updateAuthorInput: UpdateAuthorInput) {
-  //   return `This action updates a #${id} author`;
-  // }
+  async update(id: string, updateAuthorInput: UpdateAuthorInput) {
+
+    await this.findOneId(id);
+
+    const autorName = await this.authorRepository.findOne({
+      where: { name: updateAuthorInput.name },
+      relations: ['posts']
+    }); 
+    
+    if(autorName && autorName.id !== id){
+      throw new GraphQLError('Author already exists', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: updateAuthorInput.name
+          }
+    })}
+  
+    const aux = await this.authorRepository.update(id, {...updateAuthorInput});
+    return await this.findOneId(id);
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} author`;
