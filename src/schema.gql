@@ -21,6 +21,8 @@ type Post {
   content: String
   authorId: ID!
   author: Author!
+  createdDate: DateTime!
+  deletedAt: DateTime!
 }
 
 type Query {
