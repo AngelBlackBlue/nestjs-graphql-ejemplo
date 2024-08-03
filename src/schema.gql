@@ -37,6 +37,7 @@ type Query {
 
 type Mutation {
   createPost(postInput: CreatePostInput!): Post!
+  updatePost(updatePostInput: UpdatePostInput!): Post!
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
   updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
   removeAuthor(id: String!): Author!
@@ -46,6 +47,13 @@ input CreatePostInput {
   title: String!
   content: String
   authorId: String!
+}
+
+input UpdatePostInput {
+  title: String
+  content: String
+  authorId: String
+  id: String!
 }
 
 input CreateAuthorInput {

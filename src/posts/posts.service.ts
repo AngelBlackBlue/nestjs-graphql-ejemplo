@@ -6,6 +6,7 @@ import { CreatePostInput  } from './dto/create-post.Input ';
 import { GraphQLError } from 'graphql';
 import { Author } from 'src/authors/entities/author.entity';
 import { AuthorsService } from 'src/authors/authors.service';
+import { UpdatePostInput } from './dto/update-post.input';
 
 @Injectable()
 export class PostsService {
@@ -33,14 +34,6 @@ export class PostsService {
     }
 
     async createPost(post: CreatePostInput ): Promise<Post> {
-        const postTitle = await this.findOneByTitle(post.title);
-        if(postTitle){
-            throw new GraphQLError('Title already exists', {
-                extensions: {
-                  code: 'BAD_USER_INPUT',
-                  invalidArgs: post.title
-                }
-        })}
         const newPost = await this.postsRepository.create(post);
         return await this.postsRepository.save(newPost);
     }
@@ -48,4 +41,11 @@ export class PostsService {
     async getAuthor(authorId: string): Promise<Author> {
         return await this.authorsRepository.findOneId(authorId);
     }
+
+    async update(id: string, updatePostInput: UpdatePostInput) {
+        await this.postsRepository.update(id, {...updatePostInput});
+        return await this.findOneById(id);
+      }
+
+
 }
