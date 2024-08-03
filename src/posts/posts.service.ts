@@ -45,7 +45,13 @@ export class PostsService {
     async update(id: string, updatePostInput: UpdatePostInput) {
         await this.postsRepository.update(id, {...updatePostInput});
         return await this.findOneById(id);
-      }
+    }
+
+    async remove (id: string){
+        const deleteId = await this.findOneById(id);
+         await this.postsRepository.softDelete({ id }); 
+         return deleteId
+    }
 
 
 }

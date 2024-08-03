@@ -24,9 +24,9 @@ export class Post {
     @Field()
     title: string;
 
-    @Column({nullable: true})
-    @Field({nullable: true}) 
-    content?: string;
+    @Column()
+    @Field() 
+    content: string;
 
     @Column()
     @IsUUID()
