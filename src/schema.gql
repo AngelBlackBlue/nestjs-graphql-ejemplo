@@ -38,6 +38,7 @@ type Query {
 type Mutation {
   createPost(postInput: CreatePostInput!): Post!
   updatePost(updatePostInput: UpdatePostInput!): Post!
+  removePost(id: String!): Post!
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
   updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
   removeAuthor(id: String!): Author!

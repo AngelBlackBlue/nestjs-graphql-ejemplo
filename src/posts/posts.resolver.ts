@@ -45,8 +45,8 @@ export class PostsResolver {
       return this.postsService.update(updatePostInput.id, updatePostInput);
     }
   
-    // @Mutation(() => Post)
-    // removeAuthor(@Args('id', { type: () => String }) id: string) {
-    //   return this.postsService.remove(id);
-    // }
+    @Mutation(() => Post)
+    removePost(@Args('id', { type: () => String }) id: string) {
+      return this.postsService.remove(id);
+    }
 }
