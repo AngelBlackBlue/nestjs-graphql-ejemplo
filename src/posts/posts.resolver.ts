@@ -3,6 +3,7 @@ import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { CreatePostInput } from './dto/create-post.input ';
 import { Author } from 'src/authors/entities/author.entity';
+import { UpdatePostInput } from './dto/update-post.input';
 
 @Resolver(()=>Post)
 export class PostsResolver {
@@ -38,4 +39,14 @@ export class PostsResolver {
     author(@Parent() post: Post): Promise<Author> {
         return this.postsService.getAuthor(post.authorId);
     }
+
+    @Mutation(() => Post)
+    updatePost(@Args('updatePostInput') updatePostInput: UpdatePostInput) {
+      return this.postsService.update(updatePostInput.id, updatePostInput);
+    }
+  
+    // @Mutation(() => Post)
+    // removeAuthor(@Args('id', { type: () => String }) id: string) {
+    //   return this.postsService.remove(id);
+    // }
 }
