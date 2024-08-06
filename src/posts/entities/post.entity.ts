@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID } from "@nestjs/graphql";
 import { IsUUID } from "class-validator";
-import { Author } from "src/authors/entities/author.entity";
+import { Author } from "../../authors/entities/author.entity";
 import { 
     Column, 
     CreateDateColumn, 
