@@ -2,7 +2,7 @@ import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/g
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { CreatePostInput } from './dto/create-post.input ';
-import { Author } from 'src/authors/entities/author.entity';
+import { Author } from '../authors/entities/author.entity';
 import { UpdatePostInput } from './dto/update-post.input';
 
 @Resolver(()=>Post)

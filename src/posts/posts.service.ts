@@ -3,9 +3,8 @@ import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePostInput  } from './dto/create-post.Input ';
-import { GraphQLError } from 'graphql';
-import { Author } from 'src/authors/entities/author.entity';
-import { AuthorsService } from 'src/authors/authors.service';
+import { Author } from '../authors/entities/author.entity';
+import { AuthorsService } from '../authors/authors.service';
 import { UpdatePostInput } from './dto/update-post.input';
 
 @Injectable()
