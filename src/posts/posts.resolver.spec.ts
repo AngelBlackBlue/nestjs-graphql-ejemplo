@@ -35,7 +35,7 @@ import { PostsResolver } from './posts.resolver';
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { Author } from '../authors/entities/author.entity';
-import { CreatePostInput } from './dto/create-post.input ';
+import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthorsModule } from '../authors/authors.module';

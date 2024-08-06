@@ -25,7 +25,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Author } from '../authors/entities/author.entity';
 import { AuthorsService } from '../authors/authors.service';
-import { CreatePostInput } from './dto/create-post.input ';
+import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 
 describe('PostsService', () => {
@@ -46,6 +46,26 @@ describe('PostsService', () => {
     findOneId: jest.fn(),
   };
 
+  const mockAuthor: Author = {
+    id: 'author1',
+    name: 'Author Name',
+    posts: [], 
+    createdDate: new Date(),
+    updatedDate: new Date(),
+    deletedAt: new Date(),
+  };
+  
+  const result: Post[] = [{
+    id: '1',
+    title: 'Test Post',
+    content: 'Content',
+    authorId: 'author1',
+    author: mockAuthor, 
+    createdDate: new Date(),
+    updatedDate: new Date(),
+    deletedAt: new Date(),
+  }];
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -64,14 +84,13 @@ describe('PostsService', () => {
     expect(service).toBeDefined();
   });
 
-  // describe('findAll', () => {
-  //   it('should return an array of posts', async () => {
-  //     const result: Post[] = [{ id: '1', title: 'Test Post', content: 'Content', authorId: 'author1' }];
-  //     mockPostRepository.find.mockResolvedValue(result);
 
-  //     expect(await service.findAll()).toEqual(result);
-  //   });
-  // });
+  describe('findAll', () => {
+    it('should return an array of posts', async () => {
+       mockPostRepository.find.mockResolvedValue(result);
+       expect(await service.findAll()).toEqual(result);
+    });
+  });
 
   // describe('findOneByTitle', () => {
   //   it('should return a post by title', async () => {
