@@ -7,7 +7,7 @@ import { Author } from '../authors/entities/author.entity';
 import { AuthorsService } from '../authors/authors.service';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
-import { spec } from 'node:test/reporters';
+
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -29,23 +29,35 @@ describe('PostsService', () => {
 
   const mockAuthor: Author = {
     id: '825d324d-275d-49c0-9619-5a452a3f6d23',
-    name: 'Author Name',
+    name: 'Author 01',
     posts: [], 
     createdDate: new Date(),
     updatedDate: new Date(),
     deletedAt: new Date(),
   };
   
-  const post: Post = {
-    id: '5370ddcf-bdf5-4ab9-a4eb-eb84125c0506',
-    title: 'Test Post',
-    content: 'Content',
-    authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
-    author: mockAuthor, 
-    createdDate: new Date(),
-    updatedDate: new Date(),
-    deletedAt: new Date(),
-  };
+  const post: Post[] = [
+    {
+      id: '5370ddcf-bdf5-4ab9-a4eb-eb84125c0506',
+      title: 'Test Post01',
+      content: 'Content',
+      authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
+      author: mockAuthor, 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    },
+    {
+      id: '5370ddcf-bdf5-4ab9-a4eb-eb84125c0507',
+      title: 'Test Post01',
+      content: 'Content 01',
+      authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
+      author: mockAuthor, 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    }
+  ];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -65,33 +77,30 @@ describe('PostsService', () => {
     expect(service).toBeDefined();
   });
 
+  describe('findAll', () => {
 
-  // describe('findAll', () => {
-  //   it('should return an array of posts', async () => {
-  //      mockPostRepository.find.mockResolvedValue(result);
-  //      expect(await service.findAll()).toEqual(result);
-  //   });
-  // });
+    it('should return an array of posts', async () => {
+      jest.spyOn(postRepository, 'find').mockResolvedValue(post)
 
-  // describe('findOneByTitle', () => {
-  //   it('should return a post by title', async () => {
-  //     mockPostRepository.findOneBy.mockResolvedValue('Test Post');
-
-
-  //     expect(await service.findOneByTitle(result[])).toEqual() ;
-  //   });
-  // });
+      const result = await service.findAll()
+      expect(postRepository.find).toHaveBeenCalled()
+      expect(result).toEqual(post)
+    })
+    
+  })
 
   describe('findOneById', () => {
     it('should return a post by id', async () => {
-      jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(post);
+      jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(post[0]);
       
-      const result = await service.findOneById(post.id)
+      const result = await service.findOneById(post[0].id)
 
-      expect(postRepository.findOneBy).toHaveBeenCalledWith({ id: post.id });
-      expect(result).toEqual(post); 
+      expect(postRepository.findOneBy).toHaveBeenCalledWith({ id: post[0].id });
+      expect(result).toEqual(post[0]); 
     });
   })
+     
+
 
 
 });
