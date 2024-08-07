@@ -27,14 +27,24 @@ describe('PostsService', () => {
     findOneId: jest.fn(),
   };
 
-  const mockAuthor: Author = {
-    id: '825d324d-275d-49c0-9619-5a452a3f6d23',
-    name: 'Author 01',
-    posts: [], 
-    createdDate: new Date(),
-    updatedDate: new Date(),
-    deletedAt: new Date(),
-  };
+  const mockAuthor: Author[] =   [
+    {
+      id: '825d324d-275d-49c0-9619-5a452a3f6d23',
+      name: 'Author 01',
+      posts: [], 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    },
+    {
+      id: '825d324d-275d-49c0-9619-5a452a3f6d24',
+      name: 'Author 02',
+      posts: [], 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    }
+  ];
   
   const post: Post[] = [
     {
@@ -42,17 +52,17 @@ describe('PostsService', () => {
       title: 'Test Post01',
       content: 'Content',
       authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
-      author: mockAuthor, 
+      author: mockAuthor[0], 
       createdDate: new Date(),
       updatedDate: new Date(),
       deletedAt: new Date(),
     },
     {
       id: '5370ddcf-bdf5-4ab9-a4eb-eb84125c0507',
-      title: 'Test Post01',
-      content: 'Content 01',
-      authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
-      author: mockAuthor, 
+      title: 'Test Post02',
+      content: 'Content 02',
+      authorId: '825d324d-275d-49c0-9619-5a452a3f6d24',
+      author: mockAuthor[1], 
       createdDate: new Date(),
       updatedDate: new Date(),
       deletedAt: new Date(),
@@ -78,15 +88,23 @@ describe('PostsService', () => {
   });
 
   describe('findAll', () => {
-
     it('should return an array of posts', async () => {
       jest.spyOn(postRepository, 'find').mockResolvedValue(post)
 
       const result = await service.findAll()
       expect(postRepository.find).toHaveBeenCalled()
       expect(result).toEqual(post)
-    })
-    
+    })  
+  })
+
+  describe('findAllPostByAuthor', () => {
+    it('should return an array of posts by author', async () => {
+      jest.spyOn(postRepository, 'find').mockResolvedValue([post[0]]);
+
+      const result = await service.findAllPostByAuthor(post[0].authorId);
+      expect(postRepository.find).toHaveBeenCalledWith({ where: { authorId: post[0].authorId }, relations: ['author'] });
+      expect(result).toEqual([post[0]]);
+    });
   })
 
   describe('findOneById', () => {
@@ -99,6 +117,7 @@ describe('PostsService', () => {
       expect(result).toEqual(post[0]); 
     });
   })
+
      
 
 
