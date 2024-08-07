@@ -1,23 +1,3 @@
-// import { Test, TestingModule } from '@nestjs/testing';
-// import { PostsService } from './posts.service';
-
-// describe('PostsService', () => {
-//   let service: PostsService;
-
-//   beforeEach(async () => {
-//     const module: TestingModule = await Test.createTestingModule({
-//       providers: [PostsService],
-//     }).compile();
-
-//     service = module.get<PostsService>(PostsService);
-//   });
-
-//   it('should be defined', () => {
-//     expect(service).toBeDefined();
-//   });
-// });
-
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
@@ -27,6 +7,7 @@ import { Author } from '../authors/entities/author.entity';
 import { AuthorsService } from '../authors/authors.service';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
+
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -46,25 +27,47 @@ describe('PostsService', () => {
     findOneId: jest.fn(),
   };
 
-  const mockAuthor: Author = {
-    id: 'author1',
-    name: 'Author Name',
-    posts: [], 
-    createdDate: new Date(),
-    updatedDate: new Date(),
-    deletedAt: new Date(),
-  };
+  const mockAuthor: Author[] =   [
+    {
+      id: '825d324d-275d-49c0-9619-5a452a3f6d23',
+      name: 'Author 01',
+      posts: [], 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    },
+    {
+      id: '825d324d-275d-49c0-9619-5a452a3f6d24',
+      name: 'Author 02',
+      posts: [], 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    }
+  ];
   
-  const result: Post[] = [{
-    id: '1',
-    title: 'Test Post',
-    content: 'Content',
-    authorId: 'author1',
-    author: mockAuthor, 
-    createdDate: new Date(),
-    updatedDate: new Date(),
-    deletedAt: new Date(),
-  }];
+  const post: Post[] = [
+    {
+      id: '5370ddcf-bdf5-4ab9-a4eb-eb84125c0506',
+      title: 'Test Post01',
+      content: 'Content',
+      authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
+      author: mockAuthor[0], 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    },
+    {
+      id: '5370ddcf-bdf5-4ab9-a4eb-eb84125c0507',
+      title: 'Test Post02',
+      content: 'Content 02',
+      authorId: '825d324d-275d-49c0-9619-5a452a3f6d24',
+      author: mockAuthor[1], 
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      deletedAt: new Date(),
+    }
+  ];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -84,81 +87,39 @@ describe('PostsService', () => {
     expect(service).toBeDefined();
   });
 
-
   describe('findAll', () => {
     it('should return an array of posts', async () => {
-       mockPostRepository.find.mockResolvedValue(result);
-       expect(await service.findAll()).toEqual(result);
+      jest.spyOn(postRepository, 'find').mockResolvedValue(post)
+
+      const result = await service.findAll()
+      expect(postRepository.find).toHaveBeenCalled()
+      expect(result).toEqual(post)
+    })  
+  })
+
+  describe('findAllPostByAuthor', () => {
+    it('should return an array of posts by author', async () => {
+      jest.spyOn(postRepository, 'find').mockResolvedValue([post[0]]);
+
+      const result = await service.findAllPostByAuthor(post[0].authorId);
+      expect(postRepository.find).toHaveBeenCalledWith({ where: { authorId: post[0].authorId }, relations: ['author'] });
+      expect(result).toEqual([post[0]]);
     });
-  });
+  })
 
-  // describe('findOneByTitle', () => {
-  //   it('should return a post by title', async () => {
-  //     const result: Post = { id: '1', title: 'Test Post', content: 'Content', authorId: 'author1' };
-  //     mockPostRepository.findOneBy.mockResolvedValue(result);
+  describe('findOneById', () => {
+    it('should return a post by id', async () => {
+      jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(post[0]);
+      
+      const result = await service.findOneById(post[0].id)
 
-  //     expect(await service.findOneByTitle('Test Post')).toEqual(result);
-  //   });
-  // });
+      expect(postRepository.findOneBy).toHaveBeenCalledWith({ id: post[0].id });
+      expect(result).toEqual(post[0]); 
+    });
+  })
 
-  // describe('findOneById', () => {
-  //   it('should return a post by id', async () => {
-  //     const result: Post = { id: '1', title: 'Test Post', content: 'Content', authorId: 'author1' };
-  //     mockPostRepository.findOneBy.mockResolvedValue(result);
+     
 
-  //     expect(await service.findOneById('1')).toEqual(result);
-  //   });
-  // });
 
-  // describe('findAllPostByAuthor', () => {
-  //   it('should return posts by authorId', async () => {
-  //     const result: Post[] = [{ id: '1', title: 'Test Post', content: 'Content', authorId: 'author1' }];
-  //     mockPostRepository.find.mockResolvedValue(result);
 
-  //     expect(await service.findAllPostByAuthor('author1')).toEqual(result);
-  //   });
-  // });
-
-  // describe('createPost', () => {
-  //   it('should create and return a new post', async () => {
-  //     const postInput: CreatePostInput = { title: 'New Post', content: 'New Content', authorId: 'author1' };
-  //     const result: Post = { id: '1', ...postInput };
-
-  //     mockPostRepository.create.mockReturnValue(result);
-  //     mockPostRepository.save.mockResolvedValue(result);
-
-  //     expect(await service.createPost(postInput)).toEqual(result);
-  //   });
-  // });
-
-  // describe('getAuthor', () => {
-  //   it('should return the author of a post', async () => {
-  //     const result: Author = { id: 'author1', name: 'Author Name', posts: [] };
-  //     mockAuthorsService.findOneId.mockResolvedValue(result);
-
-  //     expect(await service.getAuthor('author1')).toEqual(result);
-  //   });
-  // });
-
-  // describe('update', () => {
-  //   it('should update and return the updated post', async () => {
-  //     const updatePostInput: UpdatePostInput = { id: '1', title: 'Updated Post', content: 'Updated Content', authorId: 'author1' };
-  //     const result: Post = { id: '1', title: 'Updated Post', content: 'Updated Content', authorId: 'author1' };
-
-  //     mockPostRepository.update.mockResolvedValue(result);
-  //     mockPostRepository.findOneBy.mockResolvedValue(result);
-
-  //     expect(await service.update('1', updatePostInput)).toEqual(result);
-  //   });
-  // });
-
-  // describe('remove', () => {
-  //   it('should soft delete a post and return the deleted post', async () => {
-  //     const result: Post = { id: '1', title: 'Test Post', content: 'Content', authorId: 'author1' };
-  //     mockPostRepository.findOneBy.mockResolvedValue(result);
-  //     mockPostRepository.softDelete.mockResolvedValue(result);
-
-  //     expect(await service.remove('1')).toEqual(result);
-  //   });
-  // });
 });
