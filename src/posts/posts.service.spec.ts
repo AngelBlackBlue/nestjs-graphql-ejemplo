@@ -87,6 +87,40 @@ describe('PostsService', () => {
     expect(service).toBeDefined();
   });
 
+  // describe('createPost', () => {
+  //   it('should create a new post', async () => {
+  //     jest.spyOn(postRepository, 'save').mockResolvedValue(post[0]);
+  
+  //     const result = await service.createPost(post[0]);
+  //     expect(result).toEqual(post[0]);
+  //   })
+    
+  // })
+
+  // describe('createPost', () => {
+  //   it('should create a new post', async () => {
+  //     jest.spyOn(postRepository, 'save').mockResolvedValue(post[0]);
+  
+  //     const result = await service.createPost(post[0]);
+
+  //     console.log(result);
+
+  //     console.log(post[0]);
+  
+  //     // Verifica que se llame al método 'save' con el post correcto
+  //     // expect(postRepository.save).toHaveBeenCalledWith(post[0]);
+      
+  //     // Verifica que el resultado sea el esperado
+  //     expect({...result}).toEqual({...post[0]});
+  //   });
+  
+  //   it('should throw an error if the post cannot be created', async () => {
+  //     jest.spyOn(postRepository, 'save').mockRejectedValue(new Error('Failed to create post'));
+  
+  //     await expect(service.createPost(post[0])).rejects.toThrow('Failed to create post');
+  //   });
+  // });
+
   describe('findAll', () => {
     it('should return an array of posts', async () => {
       jest.spyOn(postRepository, 'find').mockResolvedValue(post)
@@ -127,6 +161,8 @@ describe('PostsService', () => {
       expect(result).toEqual(post[0]); 
     });
   })
+
+
 
      
 
