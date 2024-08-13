@@ -69,6 +69,7 @@ describe('PostsService', () => {
     }
   ];
 
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -129,6 +130,14 @@ describe('PostsService', () => {
       expect(postRepository.find).toHaveBeenCalled()
       expect(result).toEqual(post)
     })  
+
+    it('Should return null if there are no empty posts.', async () => {
+      jest.spyOn(postRepository, 'find').mockResolvedValue([]);
+  
+      const result = await service.findAll();
+      expect(postRepository.find).toHaveBeenCalled();
+      expect(result).toEqual([]);
+    });
   })
 
   describe('findAllPostByAuthor', () => {
