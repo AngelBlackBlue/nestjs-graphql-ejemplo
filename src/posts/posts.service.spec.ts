@@ -107,6 +107,16 @@ describe('PostsService', () => {
     });
   })
 
+  describe('findOneByTitle', () => {
+    it('should return a post by title', async () => {
+      jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(post[1]);
+      
+      const result = await service.findOneByTitle(post[1].title);
+      expect(postRepository.findOneBy).toHaveBeenCalledWith({ title: post[1].title });
+      expect(result).toEqual(post[1]);
+    })    
+  })
+
   describe('findOneById', () => {
     it('should return a post by id', async () => {
       jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(post[0]);
