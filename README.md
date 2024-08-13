@@ -9,11 +9,7 @@ This repository is a basic example project built with NestJS and GraphQL using T
 - [Installation](#installation)
 - [Usage](#usage)
 - [Scripts](#scripts)
-- [Dependencies](#dependencies)
-- [Development](#development)
 - [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Technologies
 
@@ -48,11 +44,38 @@ This repository is a basic example project built with NestJS and GraphQL using T
     npm install
     ```
 
+
 ## Usage
+
 
 To start the application, use the following command:
 
-```bash
-npm run start:dev
+   ```bash
+   npm run start:dev
+   ```
+
+The application will be available at http://localhost:3000. 
 
 
+
+## Testing
+
+This project uses Jest for testing. Here are some useful commands:
+
+Run all tests: 
+
+   ```bash    
+    npm test
+   ```
+
+Run tests in watch mode: 
+
+   ```bash    
+    npm run test:watch
+   ```
+
+Generate a coverage report: npm run test:cov
+
+   ```bash    
+    npm run test:cov
+   ```
