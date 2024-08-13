@@ -15,6 +15,11 @@ export class PostsService {
         private readonly authorsRepository: AuthorsService,
     ){}
 
+    async createPost(post: CreatePostInput ): Promise<Post> {
+        const newPost = await this.postsRepository.create(post);
+        return await this.postsRepository.save(newPost);
+    }
+
     async findAll(): Promise<Post[]> {
         return await this.postsRepository.find();
     }
@@ -30,11 +35,6 @@ export class PostsService {
 
     async findOneById(id: string): Promise<Post> {
         return await this.postsRepository.findOneBy({ id })
-    }
-
-    async createPost(post: CreatePostInput ): Promise<Post> {
-        const newPost = await this.postsRepository.create(post);
-        return await this.postsRepository.save(newPost);
     }
 
     async getAuthor(authorId: string): Promise<Author> {
