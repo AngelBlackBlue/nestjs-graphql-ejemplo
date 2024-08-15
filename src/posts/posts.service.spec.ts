@@ -148,6 +148,16 @@ describe('PostsService', () => {
       expect(postRepository.find).toHaveBeenCalledWith({ where: { authorId: post[0].authorId }, relations: ['author'] });
       expect(result).toEqual([post[0]]);
     });
+    it('should return null if post not found by author', async () => {
+      jest.spyOn(postRepository, 'find').mockResolvedValue(null);
+  
+      const result = await service.findAllPostByAuthor('non-existent-author');
+      console.log(result)
+  
+      expect(postRepository.find).toHaveBeenCalledWith({ where: { authorId: 'non-existent-author' }, relations: ['author'] });
+      expect(result).toBeNull();
+    });  
+    
   })
 
   describe('findOneByTitle', () => {
@@ -157,7 +167,15 @@ describe('PostsService', () => {
       const result = await service.findOneByTitle(post[1].title);
       expect(postRepository.findOneBy).toHaveBeenCalledWith({ title: post[1].title });
       expect(result).toEqual(post[1]);
-    })    
+    }) 
+    it('should return null if post not found by title', async () => {
+      jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(null);
+  
+      const result = await service.findOneByTitle('non-existent-title');
+  
+      expect(postRepository.findOneBy).toHaveBeenCalledWith({ title: 'non-existent-title' });
+      expect(result).toBeNull();
+    });   
   })
 
   describe('findOneById', () => {
@@ -179,8 +197,5 @@ describe('PostsService', () => {
     });
 
   })
-   
-
-
 
 });
