@@ -132,11 +132,11 @@ describe('PostsService', () => {
     })  
 
     it('Should return null if there are no empty posts.', async () => {
-      jest.spyOn(postRepository, 'find').mockResolvedValue([]);
+      jest.spyOn(postRepository, 'find').mockResolvedValue(null);
   
       const result = await service.findAll();
       expect(postRepository.find).toHaveBeenCalled();
-      expect(result).toEqual([]);
+      expect(result).toBeNull();
     });
   })
 
@@ -169,11 +169,17 @@ describe('PostsService', () => {
       expect(postRepository.findOneBy).toHaveBeenCalledWith({ id: post[0].id });
       expect(result).toEqual(post[0]); 
     });
+    it('should return null if post not found by id', async () => {
+      jest.spyOn(postRepository, 'findOneBy').mockResolvedValue(null);
+  
+      const result = await service.findOneById('non-existent-id');
+  
+      expect(postRepository.findOneBy).toHaveBeenCalledWith({ id: 'non-existent-id' });
+      expect(result).toBeNull();
+    });
+
   })
-
-
-
-     
+   
 
 
 
