@@ -88,15 +88,27 @@ describe('PostsService', () => {
     expect(service).toBeDefined();
   });
 
-  // describe('createPost', () => {
-  //   it('should create a new post', async () => {
-  //     jest.spyOn(postRepository, 'save').mockResolvedValue(post[0]);
+  describe('createPost', () => {
+    it('should create a new post', async () => {
+      const newPost = 
+        {
+          title: 'Test Post01',
+          content: 'Content',
+          authorId: '825d324d-275d-49c0-9619-5a452a3f6d23',
+          author: mockAuthor[0], 
+          createdDate: new Date(),
+          updatedDate: new Date(),
+          deletedAt: new Date(),
+        },
+      
+
+      jest.spyOn(postRepository, 'save').mockImplementationOnce(() => Promise.resolve(post));
   
-  //     const result = await service.createPost(post[0]);
-  //     expect(result).toEqual(post[0]);
-  //   })
+      const result = await service.createPost(post[0]);
+      expect(result).toEqual(post[0]);
+    })
     
-  // })
+  })
 
   // describe('createPost', () => {
   //   it('should create a new post', async () => {
